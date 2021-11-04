@@ -1,0 +1,22 @@
+
+
+library(ggplot2)
+library(tidyverse)
+library(readxl)
+
+
+# Importation du fichier Excel
+USADataMap <- read_excel("C:/Users/Admin/Desktop/UNIQ-Cours/Logiciel R/USA map/USADataMap.xlsx")
+View(USADataMap)
+
+# Appellation de la carte de USA
+usmap <- usmap::us_map()
+view(usmap)
+
+# Fusion des deux documents
+usmap <- merge(usmap, USADataMap, by.x = "full", by.y = "state") 
+view(usmap)
+
+# Appellation de la carte avec les données
+ggplot(usmap, aes(x=x, y=y, group=group, fill=Cases)) +  geom_polygon(color = "white") + geom_point(data=usmap,aes(x=x, y=y, size=Vaccinated), color= "red", alpha=I(0.09)) 
+
